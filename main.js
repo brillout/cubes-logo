@@ -24,6 +24,7 @@ let box1 = new Zdog.Box({
 })
 //box1.copy({ addTo: box1, stroke: boxStroke, fill: false, color: '#eee' }); // stroke for box1
 
+//*
 const colors = [
   'E5B740', // middle
   'A99790', // bottom
@@ -34,6 +35,19 @@ const colors = [
   '841B2D', // top
   'green' // back (hidden)
 ]
+//*/
+/*
+const colors = [
+  'black', // middle
+  'black', // bottom
+  'black', // right top
+  'black', // right bottom
+  'black', // left top
+  'black', // left bottom
+  'black', // top
+  'black' // back (hidden)
+]
+*/
 colors.forEach(makeStrokeBox)
 
 function makeStrokeBox(color, i) {
@@ -60,14 +74,43 @@ function makeStrokeBox(color, i) {
   orgbox.copy({ stroke: boxStroke, fill: false, color: c })
 }
 
+// animation
+var TAU = Zdog.TAU
+var ticker = 0
+
 function animate() {
   // update
   if (isSpinning) {
-    // animateRoteSlice();
-    // annimateRotateAll();
+    annimateRotateAll();
   }
   illo.updateRenderGraph()
   requestAnimationFrame(animate)
+}
+
+var cycleCount = 105
+
+var keyframes = [
+  { x: 1.0, y: 0.0 },
+  { x: 0.0, y: 0.0 },
+  { x: -1.0, y: -1.0 },
+  { x: -2.0, y: -3.0 },
+  { x: 1.0, y: 0.0 },
+  /*
+  { x: 0.0, y: TAU * 1.0 },
+  { x: 1.0, y: TAU * 1.0 },
+  */
+]
+
+function annimateRotateAll() {
+  var progress = ticker / cycleCount
+  var tween = Zdog.easeInOut(progress % 1, 4)
+  var turnLimit = keyframes.length - 1
+  var turn = Math.floor(progress % turnLimit)
+  var keyA = keyframes[turn]
+  var keyB = keyframes[turn + 1]
+  illo.rotate.x = Zdog.lerp(keyA.x, keyB.x, tween)
+  illo.rotate.y = Zdog.lerp(keyA.y, keyB.y, tween)
+  ticker++
 }
 
 illo.translate.y = -50
