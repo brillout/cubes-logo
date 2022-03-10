@@ -1,4 +1,5 @@
 import './style.css'
+import Color from 'color'
 
 // code from zzz.dog
 var boxSize = 30;
@@ -25,20 +26,40 @@ let box1 = new Zdog.Box({
 });
 //box1.copy({ addTo: box1, stroke: boxStroke, fill: false, color: '#eee' }); // stroke for box1
 
-boxes.push({ translate: { y: 0          , x: 0          , z: 0          }, color: '#00f'    });
-boxes.push({ translate: { y: 0          , x: 0          , z: -boxOffset }, color: '#0f0'    });
-boxes.push({ translate: { y: 0          , x: -boxOffset , z: 0          }, color: '#0ff'    });
-boxes.push({ translate: { y: 0          , x: -boxOffset , z: -boxOffset }, color: '#f00'    });
-boxes.push({ translate: { y: -boxOffset , x: 0          , z: 0          }, color: '#f0f'    });
-boxes.push({ translate: { y: -boxOffset , x: 0          , z: -boxOffset }, color: '#ff0'    });
-boxes.push({ translate: { y: -boxOffset , x: -boxOffset , z: 0          }, color: '#FF7E00' });
-boxes.push({ translate: { y: -boxOffset , x: -boxOffset , z: -boxOffset }, color: '#FF7E00' });
+const colors = [
+  'E5B740', // middle
+  'A99790', // bottom
+  'A24331', // right top
+  '4B64AE', // right bottom
+  '#3B7A57', // left top
+  '915C83', // left bottom
+  '841B2D', // top
+  'green', // back (hidden)
+]
+colors.forEach(makeStrokeBox);
 
-boxes.forEach(makeStrokeBox);
-
-function makeStrokeBox({ translate, color }) {
-  const orgbox = box1.copy({ translate, color })
-  return orgbox.copy({ stroke: boxStroke , fill: false, color });
+function makeStrokeBox(color, i) {
+  const bin = i.toString(2).padStart(3, '0')
+  const translate = {
+    x: -1 * boxOffset * parseInt(bin[0]),
+    y: -1 * boxOffset * parseInt(bin[1]),
+    z: -1 * boxOffset * parseInt(bin[2]),
+  }
+  if( !color.startsWith('#') && color.length===6 ) {
+    color = '#' + color
+  }
+  color = color.trim()
+  let c = Color(color)
+  c = c.lighten(0.2)
+  c = c.desaturate(0.4)
+  /*
+  c = c.lighten(0.1)
+  c = c.desaturate(0.1)
+  */
+  c = c.hex()
+  //c = '#000'
+  const orgbox = box1.copy({ translate, color: color })
+  orgbox.copy({ stroke: boxStroke , fill: false, color: c });
 }
 
 // animation
