@@ -23,56 +23,22 @@ let box1 = new Zdog.Box({
   depth: boxSize,
   color: '#FFF'
 });
-box1.copy({ addTo: box1, stroke: boxStroke, fill: false, color: '#eee' }); // stroke for box1
+//box1.copy({ addTo: box1, stroke: boxStroke, fill: false, color: '#eee' }); // stroke for box1
 
-/*
-boxes.push(box1.copy({ addTo: box1, translate: { y: -boxOffset }, }));
-boxes.push(box1.copy({ addTo: box1, translate: { y: -boxOffset, x: -boxOffset }, color: '#82C800', }));
-boxes.push(box1.copy({ addTo: box1, translate: { y: -boxOffset, x: boxOffset }, color: '#82C800', }));
-boxes.push(box1.copy({ addTo: box1, translate: { x: -boxOffset }, color: '#82C800', }));
-boxes.push(box1.copy({ addTo: box1, translate: { x: boxOffset }, color: '#82C800', }));
-boxes.push(box1.copy({ addTo: box1, translate: { y: boxOffset}, color: '#82C800', }));
-boxes.push(box1.copy({ addTo: box1, translate: { y: boxOffset, x: boxOffset }, color: '#82C800', }));
-boxes.push(box1.copy({ addTo: box1, translate: { y: boxOffset, x: -boxOffset }, color: '#82C800', }));
-
-/*
-// right side
-boxes.push(box1.copy({ translate: { y: -boxOffset, x: boxOffset, z: -boxOffset }, color: '#82C800', }));
-boxes.push(box1.copy({ translate: { x: boxOffset, z: -boxOffset }, }));
-boxes.push(box1.copy({ translate: { y: boxOffset, x: boxOffset, z: -boxOffset }, }));
-boxes.push(box1.copy({ translate: { y: -boxOffset, x: boxOffset, z: -boxOffset*2 }, color: '#82C800', }));
-boxes.push(box1.copy({ translate: { x: boxOffset, z: -boxOffset*2 }, color: '#82C800', }));
-boxes.push(box1.copy({ translate: { y: boxOffset, x: boxOffset, z: -boxOffset*2 }, color: '#82C800', }));
-
-// front
-boxes.push(box1.copy({ translate: { y: boxOffset, x: 0, z: -boxOffset*2 }, }));
-boxes.push(box1.copy({ translate: { y: boxOffset, x: -boxOffset, z: -boxOffset*2 }, }));
-boxes.push(box1.copy({ translate: { y: boxOffset, x: 0, z: -boxOffset }, }));
-boxes.push(box1.copy({ translate: { y: boxOffset, x: -boxOffset, z: -boxOffset }, }));
-
-// back
-boxes.push(box1.copy({ translate: { y: -boxOffset, x: 0, z: -boxOffset }, }));
-boxes.push(box1.copy({ translate: { y: -boxOffset, x: 0, z: -boxOffset*2 }, }));
-boxes.push(box1.copy({ translate: { y: -boxOffset, x: -boxOffset, z: -boxOffset*2 }, }));
-boxes.push(box1.copy({ translate: { y: -boxOffset, x: -boxOffset, z: -boxOffset }, }));
-*/
-
-
-// left
-boxes.push(box1.copy({ translate: { y: 0, x: -boxOffset, z: -boxOffset }, }));
-boxes.push(box1.copy({ translate: { y: 0, x: -boxOffset, z: -boxOffset*2 }, }));
-
-// bottom
-boxes.push(box1.copy({ translate: { y: 0, x: 0, z: -boxOffset*2 }, }));
-
-
-// center
-boxes.push(box1.copy({ translate: { y: 0, x: 0, z: -boxOffset }, }));
+boxes.push({ translate: { y: 0          , x: 0          , z: 0          }, color: '#00f'    });
+boxes.push({ translate: { y: 0          , x: 0          , z: -boxOffset }, color: '#0f0'    });
+boxes.push({ translate: { y: 0          , x: -boxOffset , z: 0          }, color: '#0ff'    });
+boxes.push({ translate: { y: 0          , x: -boxOffset , z: -boxOffset }, color: '#f00'    });
+boxes.push({ translate: { y: -boxOffset , x: 0          , z: 0          }, color: '#f0f'    });
+boxes.push({ translate: { y: -boxOffset , x: 0          , z: -boxOffset }, color: '#ff0'    });
+boxes.push({ translate: { y: -boxOffset , x: -boxOffset , z: 0          }, color: '#FF7E00' });
+boxes.push({ translate: { y: -boxOffset , x: -boxOffset , z: -boxOffset }, color: '#FF7E00' });
 
 boxes.forEach(makeStrokeBox);
 
-function makeStrokeBox(orgbox) {
-  return orgbox.copy({ stroke: boxStroke , fill: false, color: '#eee' });
+function makeStrokeBox({ translate, color }) {
+  const orgbox = box1.copy({ translate, color })
+  return orgbox.copy({ stroke: boxStroke , fill: false, color });
 }
 
 // animation
