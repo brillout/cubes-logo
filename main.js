@@ -1,4 +1,3 @@
-import './style.css'
 import Color from 'color'
 
 // code from zzz.dog
